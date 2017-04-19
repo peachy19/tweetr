@@ -1,20 +1,19 @@
 //console.log("JS file added");
-var length = 0;
-$(document).ready(function(){
+// var length = 0;
+$(function(){
   console.log("document is ready");
+  const MAX_LENGTH = 140;
 
-$(".new-tweet").find("textarea").on('keyup', function(){
-    length = $(this).val().length;
-    $(this).parent().children(".counter").text(140 - length);
-    if(length > 140){
-      $(this).parent().children(".counter").addClass('invalid');
+  $(".new-tweet textarea").on('keyup', function() {
+    const length = this.value.length;
+    const $counter = $(this).parent().children(".counter");
+
+    $counter.text(MAX_LENGTH - length);
+    if(length > MAX_LENGTH) {
+      $counter.addClass('invalid');
     } else {
-      $(this).parent().children(".counter").removeClass('invalid');
+      $counter.removeClass('invalid');
     }
-});
-
-
-
-
+  });
 });
 
