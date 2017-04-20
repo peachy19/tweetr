@@ -2,7 +2,6 @@
   position: fixed;
   top: 0;
   width: 100vw;
-
   height: 80px;
   background-color: #00a087;
   color: #e8fdff;
@@ -23,15 +22,26 @@
 }
 
 #nav-bar .compose {
-    float: right;
-    height: 60px;
-    width: 120px;
-    background-color: #E7FDFF;
-    border-radius: 4px;
-    margin: 10px;
-    color: #000;
-    font-weight: bold;
-    text-align: center;
-    line-height: 60px;
-    border: 1px solid #000;
+  float: right;
+  height: 60px;
+  width: 120px;
+  background-color: #E7FDFF;
+  border-radius: 4px;
+  margin: 10px;
+  color: #000;
+  font-size: 1.2em;
+  text-align: center;
+  line-height: 60px;
+  border: 1px solid #000;
+}
+
+#nav-bar .compose:hover {
+  background-color: white;
+  color:#00a087;
+
+}
+
+#nav-bar .compose:focus {
+  border: none
+
 }
