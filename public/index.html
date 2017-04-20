@@ -36,6 +36,9 @@
 
      <!-- char-composer JS -->
     <script type="text/javascript" src="/scripts/composer-char-counter.js"></script>
+
+       <!-- compose button -->
+    <script type="text/javascript" src="/scripts/compose-button-animation.js"></script>
   </head>
 
   <body>
@@ -43,8 +46,9 @@
     <!-- Top nav bar (fixed) -->
     <nav id="nav-bar">
       <img class="logo" src="/images/bird.png" >
-      <!--width="80px" height="80px"-->
       <span class="header">Tweeter</span>
+      <!-- <span class="compose">Compose</span> -->
+      <button class="compose">Compose</button>
     </nav>
 
     <!-- Page-specific (main) content here -->
@@ -58,20 +62,7 @@
         </form>
       </section>
 
-      <section id="all-tweets">
-<!--         <article class="tweet">
-          <header>
-            <img class="avatar" src="/images/avatar.png">
-            <span class="fName">Prachi Singh</span>
-            <span class="userName">@prachi</span>
-          </header>
-          <p>My first tweet !!!!</p>
-          <footer>
-            <span class="daysAgo">10 days ago</span>
-            <span class="footerSymbols">&#x2665;&#x2691;</span>
-          </footer>
-        </article> -->
-      </section>
+      <section id="all-tweets"></section>
 
     </main>
     <script>
