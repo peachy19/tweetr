@@ -21,3 +21,17 @@
   font-size: 2em;
   line-height: 80px
 }
+
+#nav-bar .compose {
+    float: right;
+    height: 60px;
+    width: 120px;
+    background-color: #E7FDFF;
+    border-radius: 4px;
+    margin: 10px;
+    color: #000;
+    font-weight: bold;
+    text-align: center;
+    line-height: 60px;
+    border: 1px solid #000;
+}
