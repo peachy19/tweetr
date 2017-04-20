@@ -117,7 +117,7 @@ function renderTweets(data){
   data.forEach(function(item){
         let $value = createTweetElement(item);
       console.log($value); // to see what it looks like
-  $('#all-tweets').append($value);
+  $('#all-tweets').prepend($value);
   })
 
   }
@@ -168,5 +168,5 @@ function checkValid(length){
   }
 }
 
-
+loadTweets();
 });
