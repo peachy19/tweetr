@@ -11,6 +11,13 @@ $(function() {
     const { user, content, created_at } = tweet;
     const { avatars, name, handle } = tweet.user;
 
+    let timestamp = moment(created_at).fromNow();
+
+    if(timestamp === "in a few seconds"){
+      timestamp = "a few seconds ago";
+    }
+    console.log("Time", timestamp);
+
     // var $tweet = $("<article>").addClass("tweet");
     // var $header = $("<header>");
     // $header.append($("<img>").addClass("avatar").attr("src", avatars.small));
@@ -39,7 +46,7 @@ $(function() {
           </header>
           <p>${content.text}</p>
           <footer>
-            <span class="daysAgo">${created_at}</span>
+            <span class="daysAgo">${timestamp}</span>
              <span class="footerSymbols">
               <i class="fa fa-heart"></i>
               <i class="fa fa-retweet"></i>
@@ -78,14 +85,16 @@ $(function() {
     });
   }
   $("form").on("submit", function(event) {
+    $textarea = $(this).children("textarea")[0];
     event.preventDefault();
-    var length = $(this).children("textarea")[0].textLength;
+    var length = $textarea.textLength;
     if (checkValid(length)) {
       $.ajax({
         url: "/tweets",
         method: "POST",
         data: $(this).serialize(),
         success: function() {
+          $textarea.value = "";
           loadTweets();
         }
       });
