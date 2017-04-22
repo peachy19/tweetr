@@ -38,16 +38,12 @@ article.tweet footer {
   padding: 10px;
 }
 
-/*.ui-icon
-{
-    background-image: url(http://download.jqueryui.com/themeroller/images/ui-icons_#50C7B8_256x240.png);
-}*/
-
-.footerSymbols {
+article.tweet .footerSymbols {
   float: right;
   color: #50C7B8;
   visibility: hidden;
 }
+
 
 article.tweet:hover .footerSymbols {
   visibility: visible;
@@ -57,4 +53,13 @@ article.tweet:hover {
 }
 article.tweet:hover header {
   opacity:1;
+}
+
+
+i.fa.fa-heart.like{
+  color: red;
+}
+
+.likesCounter {
+  margin-left: 40px;
 }

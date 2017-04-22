@@ -16,7 +16,9 @@ const connect = require("./lib/mongo-server.js");
 connect((database) => {
   const DataHelpers = require("./lib/data-helpers.js")(database);
   const tweetsRoutes = require("./routes/tweets")(DataHelpers);
+  const likesRoutes = require("./routes/likes")(DataHelpers);
   app.use("/tweets", tweetsRoutes);
+  app.use("/likes", likesRoutes);
   app.listen(PORT, () => {
   console.log("Example app listening on port " + PORT);
 });

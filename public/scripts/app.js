@@ -7,8 +7,9 @@
 $(function() {
   const MAX_LENGTH = 140;
 
+
   function createTweetElement(tweet) {
-    const { user, content, created_at } = tweet;
+    const { user, content, created_at,likes } = tweet;
     const { avatars, name, handle } = tweet.user;
 
     let timestamp = moment(created_at).fromNow();
@@ -16,65 +17,64 @@ $(function() {
     if(timestamp === "in a few seconds"){
       timestamp = "a few seconds ago";
     }
-    console.log("Time", timestamp);
 
-    // var $tweet = $("<article>").addClass("tweet");
-    // var $header = $("<header>");
-    // $header.append($("<img>").addClass("avatar").attr("src", avatars.small));
-    // $header.append($("<span>").addClass("fName").text(name));
-    // $header.append($("<span>").addClass("userName").text(handle));
+    var $tweet = $("<article>").addClass("tweet");
+    var $header = $("<header>");
+    $header.append($("<img>").addClass("avatar").attr("src", avatars.small));
+    $header.append($("<span>").addClass("fName").text(name));
+    $header.append($("<span>").addClass("userName").text(handle));
 
-    // var $footer = $("<footer>");
-    // $footer.append($("<span>").addClass("daysAgo").text(created_at));
-    // var $symbols = $("<span>").addClass("footerSymbols");
-    // $symbols.append($("<span>").addClass("ui-icon ui-icon-heart"));
-    // $symbols.append($("<span>").addClass("ui-icon ui-icon-refresh"));
-    // $symbols.append($("<span>").addClass("ui-icon ui-icon-flag"));
-    // $footer.append($symbols);
+    var $footer = $("<footer>");
+    $footer.append($("<span>").addClass("daysAgo").text(timestamp));
+    //if(likes){
+          $footer.append($("<span>").addClass("likesCounter"));
 
-    // $tweet.append($header);
-    // $tweet.append($("<p>").text(content.text));
-    // $tweet.append($footer);
+    //}
+    var $symbols = $("<span>").addClass("footerSymbols");
+    $symbols.append($("<i>").addClass("fa fa-heart").data("id",tweet._id));
+    //$("i.fa.fa-heart")
+    $symbols.append($("<i>").addClass("fa fa-retweet"));
+    $symbols.append($("<i>").addClass("fa fa-flag"));
+    $footer.append($symbols);
 
-    const $tweet = `
+    $tweet.append($header);
+    $tweet.append($("<p>").text(content.text));
+    $tweet.append($footer);
 
-    <article class="tweet">
-          <header>
-            <img class="avatar" src= ${avatars.small}>
-            <span class="fName">${name}</span>
-            <span class="userName">${handle}</span>
-          </header>
-          <p>${content.text}</p>
-          <footer>
-            <span class="daysAgo">${timestamp}</span>
-             <span class="footerSymbols">
-              <i class="fa fa-heart"></i>
-              <i class="fa fa-retweet"></i>
-              <i class="fa fa-flag"></i>
-             </span>
+    // const $tweet = `
 
-          </footer>
-        </article>
-    `;
+    // <article class="tweet">
+    //       <header>
+    //         <img class="avatar" src= ${avatars.small}>
+    //         <span class="fName">${name}</span>
+    //         <span class="userName">${handle}</span>
+    //       </header>
+    //       <p>${content.text}</p>
+    //       <footer>
+    //         <span class="daysAgo">${timestamp}</span>
+    //          <span class="footerSymbols">
+    //           <i class="fa fa-heart"></i>
+    //           <i class="fa fa-retweet"></i>
+    //           <i class="fa fa-flag"></i>
+    //          </span>
+
+    //       </footer>
+    //     </article>
+    // `;
 
     return $tweet;
   }
-  // Test / driver code (temporary)
 
+ // Gets every tweet element and appends it to the main container
   function renderTweets(data) {
-    const tweets = data.map(createTweetElement).reverse();
-    $('#all-tweets').append(tweets);
-    // data.forEach(function(item) {
-    //   let $value = createTweetElement(item);
-    //   // console.log($value); // to see what it looks like
-    //   $("#all-tweets").prepend($value);
-    // });
+    const tweet = data.map(createTweetElement).reverse();
+    $('#all-tweets').append(tweet);
+
+
   }
 
-  // renderTweets(data);
-
+//Makes AJAX call to get all tweets from the server/database and passes it to renderTweets()
   function loadTweets() {
-    console.log("LoadTweets is hit");
     $.ajax({
       url: "/tweets",
       method: "GET",
@@ -102,7 +102,8 @@ $(function() {
       alert("Tweet input invalid");
     }
   });
-  // to add it to the page so we can make sure it's got all the right elements, classes, etc.
+
+
 
   function checkValid(length) {
     if (!length) {
@@ -115,4 +116,51 @@ $(function() {
   }
 
   loadTweets();
+
+  function loadLikes($heart, id){
+    $.ajax({
+      url: "/likes/"+id,
+      method: "GET",
+      success: function(likes) {
+      $heart.closest("footer").find(".likesCounter").show();
+       $heart.closest("footer").find(".likesCounter").text(`${likes} like`);
+       if(likes == 0){$heart.closest("footer").find(".likesCounter").hide()}
+        console.log("Likes are", likes);
+    }
+    });
+  }
+
+
+ $("#all-tweets").on("click", "i.fa.fa-heart", function(e){
+    let likes = 0;
+    console.log($(this).data("id"));
+    $(this).toggleClass("like");
+        // $handler = $(this).closest("article").find("header .userName").text()
+    if($(this).hasClass("like")){
+         // $(".like").data("data-handler", $hanlder);
+      $(this).data("data-likes", ++likes);
+    } else {
+      $(this).data("data-likes", likes--);
+    }
+
+    console.log($(this).data("data-id"));
+        console.log("Heart",$(this),$(this).data("data-likes") );
+    $.ajax({
+
+        url: "/likes/"+$(this).data("id"),
+        method: "POST",
+        data: {"likes": $(this).data("data-likes")},
+        success: () => {
+          //if(!likes) {
+            //$(this).closest("footer").find(".likesCounter").toggle().text(`${likes} likes.`);
+          //}
+          //$(this).closest("footer").find(".likesCounter").text(`${likes} likes.`);
+
+         //console.log($(this));
+         loadLikes($(this), $(this).data("id"));
+         console.log("Success!");
+        }
+      });
+});
+
 });
