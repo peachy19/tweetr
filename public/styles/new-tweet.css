@@ -17,6 +17,11 @@
   width: 100%;
 }
 
+.errorMessage {
+  color: red;
+  margin-left: 10px;
+}
+
 .counter {
   float: right;
 }

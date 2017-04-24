@@ -1,5 +1,4 @@
-//console.log("JS file added");
-// var length = 0;
+
 $(function(){
   console.log("document is ready");
   const MAX_LENGTH = 140;

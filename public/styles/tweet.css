@@ -43,7 +43,9 @@ article.tweet .footerSymbols {
   color: #50C7B8;
   visibility: hidden;
 }
-
+article.tweet .footerSymbols * {
+ margin: 4px;
+}
 
 article.tweet:hover .footerSymbols {
   visibility: visible;
